@@ -1,6 +1,7 @@
 Azure Customer-Managed Keys (CMK) Implementation
 This project demonstrates how to configure Customer-Managed Keys (CMK) for an Azure Storage Account using Azure Key Vault and a System-Assigned Managed Identity. The goal is to improve the security of data at rest by allowing the organization to control the encryption keys instead of relying solely on Microsoft-managed keys.
-📌 Architecture Overview
+Architecture Overview
+
 Azure Key Vault (erckeyvault01) was created as the secure location for storing encryption keys. Both Soft Delete and Purge Protection were enabled to help prevent accidental or malicious deletion of keys.
 An RSA 2048-bit encryption key named cmk-storage-key was generated in the Key Vault. Key management was performed using Azure RBAC with the Key Vault Crypto Officer role.
 The Azure Storage Account (ercmslearnstorage) was configured with a System-Assigned Managed Identity. This identity was granted the Key Vault Crypto Service Encryption User role, allowing the storage account to securely access the encryption key without storing credentials.
