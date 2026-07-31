@@ -93,6 +93,7 @@ az storage account update \
 
   Verification
 ​Verify that the storage account is actively using Customer-Managed Keys:
+
 az storage account show \
   --name ercmslearnstorage \
   --resource-group ErcMslearngroup \
