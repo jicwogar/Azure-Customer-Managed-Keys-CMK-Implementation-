@@ -93,7 +93,9 @@ az storage account update \
   --encryption-key-source Microsoft.Keyvault
 
   Verification
-​Verify that the storage account is actively using Customer-Managed Keys:
+  
+​
+Verify that the storage account is actively using Customer-Managed Keys:
 
 az storage account show \
   --name ercmslearnstorage \
