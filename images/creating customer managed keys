@@ -1,7 +1,0 @@
-Azure Customer-Managed Keys (CMK): 
-Provides organization-controlled
-encryption using Azure Key Vault or 
-Managed HSM, enabling key rotation, 
-revocation, auditing, regulatory 
-compliance, and stronger protection
-for sensitive Azure data.
