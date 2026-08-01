@@ -1,0 +1,55 @@
+[1:47 pm, 01/08/2026] Inyambe Wogar: 
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]"
+    },
+    "keyVaultName": {
+      "type": "string",
+      "defaultValue": "erckeyvault01"
+    },
+    "storageAccountName": {
+      "type": "string",
+      "defaultValue": "myercstore1"
+    },
+    "keyName": {
+      "type": "string",
+      "defaultValue": "cmk-storage-key"
+    }
+  },
+  "variables": {
+    // Built-in Role Definition ID for "Key Vault Crypto Service Encryption User"
+    "roleDefinitionId": "e147488a-f6f5-4113-8a2d-624137032172"
+  },
+  "resources": [
+    // 1. Key Vault
+    {
+      "type": "Microsoft.KeyVault…
+[1:48 pm, 01/08/2026] Inyambe Wogar: az deployment group create --resource-group ErcMslearngroup --template-file azuredeploy.json
+[3:34 pm, 01/08/2026] Inyambe Wogar: # 1. Create the Key Vault
+az keyvault create --name erckeyvault01 --resource-group ErcMslearngroup --enable-rbac-authorization true --enable-purge-protection true
+
+# 2. Assign yourself permission to create keys inside the vault
+USER_ID=$(az ad signed-in-user show --query id -o tsv)
+az role assignment create --assignee-object-id $USER_ID --assignee-principal-type User --role "Key Vault Crypto Officer" --scope $(az keyvault show --name erckeyvault01 --query id -o tsv)
+
+# Wait 15 seconds for RBAC role to sync
+sleep 15
+
+# 3. Create the RSA key
+az keyvault key create --vault-name erckeyvault01 --name cmk-storage-key --kty RSA --size 2048
+
+# 4. Enable System-Assigned Identity on Storage Account and grab its Principal ID
+az storage account update --name myercstore1…
+[3:35 pm, 01/08/2026] Inyambe Wogar: Ah! That explains why the CLI was throwing AadClientCredentialsGrantFailure all along—the Key Vault *erckeyvault01 was never actually created* (or it was created in a different resource group/subscription, or failed during setup).
+Let's quickly create the Key Vault right now, generate the key, and complete the setup!
+### Step 1: Click "Cancel" in the Portal
+Click the *Cancel* button on that flyout panel in your portal to close it for a moment.
+### Step 2: Run This Block in Cloud Shell
+Copy and paste this entire block into your Cloud Shell terminal. It will create the vault, generate the key, set up the identity, grant permissions, and apply encryption all in one go:
+bash
+# 1. Create the Key Vault
+az keyvault create --name erckeyvault01 --resource-group ErcMs…
+[3:52 pm, 01/08/2026] Inyambe Wogar: az storage account show --name myercstore1 --resource-group ErcMslearngroup --query encryption.keySource -o tsv
