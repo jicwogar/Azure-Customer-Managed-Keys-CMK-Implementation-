@@ -78,7 +78,7 @@ Configure the Storage Account with a managed identity so it can authenticate to 
 
 Obtain the managed identity's principal ID. This identifier is used when assigning Azure RBAC permissions.
 
-![Step 7 - Get Principal ID](./07-get-principal-id.png)
+![Step 7 - Get Principal ID](./07-getprincipal-id.png)
 
 ### Step 8 — Assign the Key Vault Role
 
