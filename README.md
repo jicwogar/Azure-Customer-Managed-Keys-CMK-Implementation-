@@ -87,7 +87,7 @@ az group create   --name <resource-group-name>   --location <azure-region>
 
 A dedicated resource group makes it easier to manage, monitor, and remove the resources associated with the project.
 
-![Step 1 - Create resource group](Step%201.%20create%20a%20resource%20group%20using%20bash%20in%20cloud%20shell.png)
+!Step 1. create a resource gruop using  bash in cloud shell](Step%201.%20create%20a%20resource%20group%20using%20bash%20in%20cloud%20shell.png)
 
 ---
 
